@@ -58,14 +58,22 @@ class QuotesController extends Controller
 
 
     public function quoteApi() {
+
         $collection = collect(array());
 
-        foreach( range(1, 5) as $index ){
+        for( $i=0; $i<5; $i++ ){
 
             $apiResponse = Http::get('https://api.kanye.rest/text');
 
-            $collection->push( $apiResponse->body() );
-            
+            if(!$collection->contains($apiResponse->body())){
+
+                $collection->push( $apiResponse->body() );
+
+            }else{
+
+                $i -= 1;
+                
+            }
         }
 
         return $collection;
