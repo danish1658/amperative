@@ -17,7 +17,9 @@ class QuotesController extends Controller
         if($request->session()->get('authenticated') == 'true'){
 
             $collection = collect(array());
+            
             $cachedQuotes = Cache::get('quotes');
+
             $cachedQuotes = (!isset($cachedQuotes)) ? collect([]) : $cachedQuotes;
 
             if(count($cachedQuotes) > 0){
