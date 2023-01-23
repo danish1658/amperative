@@ -14,17 +14,19 @@ class QuotesController extends Controller
 
     public function index(Request $request){
 
-        if($request->session()->get('authenticated') == 'true'){
+        if( $request->session()->get( 'authenticated' ) == 'true' ){
 
-            $collection = collect(array());
+            $collection = collect( array() );
             
             $cachedQuotes = Cache::get('quotes');
 
-            $cachedQuotes = (!isset($cachedQuotes)) ? collect([]) : $cachedQuotes;
+            $cachedQuotes = ( !isset($cachedQuotes)) ? collect([]) : $cachedQuotes;
 
-            if(count($cachedQuotes) > 0){
+            if( count($cachedQuotes) > 0 ){
+
                 foreach( range(1, 5) as $index ){
-                    $random = $cachedQuotes[rand(0,count($cachedQuotes))];
+
+                    $random = $cachedQuotes[rand( 0, count($cachedQuotes) - 1 )];
     
                     $collection->push( $random );
                     
@@ -55,9 +57,11 @@ class QuotesController extends Controller
         ]);
 
         if($validated){
+
             $request->session()->put( 'authenticated', 'true' );
 
             return redirect( '/' );
+            
         }       
         
 

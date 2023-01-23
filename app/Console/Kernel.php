@@ -18,9 +18,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         
-        $schedule->call(function () {
+        $schedule->call( function () {
 
-            $cacheQuotes = Cache::pull('quotes');
+            $cacheQuotes = Cache::pull( 'quotes' );
 
             Cache::forget('quotes');
 
@@ -28,16 +28,17 @@ class Kernel extends ConsoleKernel
 
 
 
-            Cache::rememberForever('quotes', function() use($cacheQuotes) {
+            Cache::rememberForever( 'quotes', function() use( $cacheQuotes ) {
                 $quotes = QuotesController::fetchQuotes();
 
                 
                 
-                if(count($quotes) > 0){
-                    for( $i=0; $i<count($quotes); $i++ ){
+                if( count( $quotes ) > 0){
+
+                    for( $i = 0; $i < count( $quotes ); $i++ ){
 
         
-                        if(!$cacheQuotes->contains($quotes[$i])){
+                        if(!$cacheQuotes->contains( $quotes[$i] ) ){
                             
                             $cacheQuotes->push( $quotes[$i] );
             
