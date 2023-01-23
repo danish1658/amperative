@@ -8,3 +8,19 @@
 <p>
     To start running scheduler, run command php artisan schedule:work
 </p>
+
+
+<p>
+    <strong><i>Routes</i></strong> 
+    <br /> <br />
+    https://amperative.boltmail.in/ <br />
+    https://amperative.boltmail.in/login <br /> <br />
+    <strong><i>Api Routes</i></strong> 
+    <br /><br />
+    https://amperative.boltmail.in/api/quotes
+    
+</p>
+
+<p>
+    To start running scheduler, run command <i> php artisan schedule:work </i>
+</p>
