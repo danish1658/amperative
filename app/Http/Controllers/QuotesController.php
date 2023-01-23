@@ -18,13 +18,17 @@ class QuotesController extends Controller
 
             $collection = collect(array());
             $cachedQuotes = Cache::get('quotes');
+            $cachedQuotes = (!isset($cachedQuotes)) ? collect([]) : $cachedQuotes;
 
-            foreach( range(1, 5) as $index ){
-                $random = $cachedQuotes[rand(0,count($cachedQuotes))];
-
-                $collection->push( $random );
-                
+            if(count($cachedQuotes) > 0){
+                foreach( range(1, 5) as $index ){
+                    $random = $cachedQuotes[rand(0,count($cachedQuotes))];
+    
+                    $collection->push( $random );
+                    
+                }
             }
+
 
 
             return view( 'index' )->with( compact('collection') );
@@ -59,7 +63,7 @@ class QuotesController extends Controller
 
 
     public function fetchQuotes() {
-        
+
         $collection = collect(array());
 
         for( $i=0; $i<5; $i++ ){
