@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+
 use App\Rules\PasswordMatch;
 
 class QuotesController extends Controller
@@ -15,12 +17,12 @@ class QuotesController extends Controller
         if($request->session()->get('authenticated') == 'true'){
 
             $collection = collect(array());
+            $cachedQuotes = Cache::get('quotes');
 
             foreach( range(1, 5) as $index ){
+                $random = $cachedQuotes[rand(0,count($cachedQuotes))];
 
-                $apiResponse = Http::get('https://api.kanye.rest/text');
-
-                $collection->push( $apiResponse->body() );
+                $collection->push( $random );
                 
             }
 
@@ -34,8 +36,8 @@ class QuotesController extends Controller
         
     }
 
-    public function login(Request $request){
-    
+    public function login(){
+ 
         return view( 'login' );
 
     }
@@ -56,9 +58,8 @@ class QuotesController extends Controller
     }
 
 
-
-    public function quoteApi() {
-
+    public function fetchQuotes() {
+        
         $collection = collect(array());
 
         for( $i=0; $i<5; $i++ ){
@@ -66,17 +67,24 @@ class QuotesController extends Controller
             $apiResponse = Http::get('https://api.kanye.rest/text');
 
             if(!$collection->contains($apiResponse->body())){
-
+                
                 $collection->push( $apiResponse->body() );
 
             }else{
 
                 $i -= 1;
-                
+
             }
         }
 
         return $collection;
+    }
+
+
+    public function quoteApi() {
+
+        return $this->fetchQuotes();
+        
     }
 
 }

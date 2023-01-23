@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\QuotesController;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +17,37 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        
+        $schedule->call(function () {
+
+            $cacheQuotes = Cache::pull('quotes');
+
+            Cache::forget('quotes');
+
+            $cacheQuotes = (!isset($cacheQuotes)) ? collect([]) : $cacheQuotes; 
+
+
+
+            Cache::rememberForever('quotes', function() use($cacheQuotes) {
+                $quotes = QuotesController::fetchQuotes();
+
+                
+                
+                if(count($quotes) > 0){
+                    for( $i=0; $i<count($quotes); $i++ ){
+
+        
+                        if(!$cacheQuotes->contains($quotes[$i])){
+                            
+                            $cacheQuotes->push( $quotes[$i] );
+            
+                        }
+                    }
+                    return $cacheQuotes;
+                }
+            });
+            
+        })->everyMinute();
     }
 
     /**
