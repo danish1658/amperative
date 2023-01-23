@@ -14,3 +14,6 @@ use App\Http\Controllers\QuotesController;
 */
 
 Route::get('/', [QuotesController::class,'index']);
+Route::get('/login', [QuotesController::class,'login']);
+Route::post('/auth', [QuotesController::class,'auth']);
+
