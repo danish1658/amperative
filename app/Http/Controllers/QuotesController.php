@@ -11,7 +11,7 @@ class QuotesController extends Controller
     
 
     public function index(Request $request){
-        
+
         if($request->session()->get('authenticated') == 'true'){
 
             $collection = collect(array());
@@ -56,5 +56,19 @@ class QuotesController extends Controller
     }
 
 
+
+    public function quoteApi() {
+        $collection = collect(array());
+
+        foreach( range(1, 5) as $index ){
+
+            $apiResponse = Http::get('https://api.kanye.rest/text');
+
+            $collection->push( $apiResponse->body() );
+            
+        }
+
+        return $collection;
+    }
 
 }
