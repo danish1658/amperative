@@ -20,6 +20,3 @@
     
 </p>
 
-<p>
-    To start running scheduler
-</p>
