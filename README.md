@@ -15,7 +15,7 @@
     <br /> <br />
     https://amperative.boltmail.in/ <br />
     https://amperative.boltmail.in/login <br /> <br />
-    <strong><i>Api Routes</i></strong> 
+    
  
     
 </p>
