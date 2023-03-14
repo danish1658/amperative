@@ -22,5 +22,5 @@
 </p>
 
 <p>
-    To start running scheduler, run command <i> php artisan schedule:work </i>
+    To start running scheduler
 </p>
